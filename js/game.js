@@ -49,8 +49,8 @@ const Game = {
 
     reset() {
         this.background = new Background(this.ctx, this.width, this.height);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false } }, "./img/player1war.png", 40, 500);
-        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false } }, "./img/player2war.png", 1140, 500);
+        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 37, down: false } }, "./img/player1war.png", 40, 500);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 68, down: false } }, "./img/player2war.png", 1140, 500);
 
     },
 
