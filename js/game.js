@@ -41,16 +41,20 @@ const Game = {
         this.reset();
         this.interval = setInterval(() => {
             this.framesCounter++;
+            this.clearBullets();
+            this.clear();
             this.drawAll();
-            this.moveAll()
+            this.moveAll();
+            this.isCollision();
+            console.log(this.isCollision())
 
         }, 1000 / this.fps)
     },
 
     reset() {
         this.background = new Background(this.ctx, this.width, this.height);
-        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 37, down: false } }, "./img/player1war.png", 40, 500);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 68, down: false } }, "./img/player2war.png", 1140, 500);
+        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10);
 
     },
 
@@ -70,7 +74,44 @@ const Game = {
 
     },
 
-    clear() { },
+    clear() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    },
+    clearBullets() {
+        //funcion para limpiar bullets de player1
+        this.player1.bullets.forEach((obs, idx) => {
+            if (obs.posX >= 1280) {
+                this.player1.bullets.splice(idx, 1);
+            }
+        })
+
+        //funcion para limpiar bullets de player2
+        this.player2.bullets.forEach((obs, idx) => {
+            if (obs.posX <= 0) {
+                this.player2.bullets.splice(idx, 1);
+            }
+        })
+    },
+
+    isCollision() {
+        // funcion para comprobar colisiones
+        return this.player2.bullets.some(
+            bull =>
+                this.player1.posX + this.player1.width >= bull.posX &&
+                this.player1.posY + this.player1.height >= bull.posY &&
+                this.player1.posX <= bull.posX + 6
+        );
+
+        return this.player1.bullets.some(
+            bull =>
+                this.player2.posX + this.player2.width >= bull.posX &&
+                this.player2.posY + this.player2.height >= bull.posY &&
+                this.player2.posX <= bull.posX + 6
+        );
+
+        //fin del juego, detenemos intervalo
+    },
 
 
 

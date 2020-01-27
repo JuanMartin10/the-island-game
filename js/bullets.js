@@ -1,12 +1,12 @@
 class Bullet {
-    constructor(ctx, x, y, y0, playerH) {
+    constructor(ctx, x, y, y0, playerH, velX) {
         this.ctx = ctx
         this.posX = x;
         this.posY = y;
         this.posY0 = y0
         this.playerHeight = playerH
         this.radius = 5;
-        this.velX = 10;
+        this.velX = velX;
         this.velY = 1;
 
         this.gravity = 0.25;

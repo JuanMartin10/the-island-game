@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, w, h, keys, img, posX, posY) {
+    constructor(ctx, w, h, keys, img, posX, posY, velX) {
         this.ctx = ctx
         this.gameWidth = w
         this.gameHeight = h
@@ -21,6 +21,7 @@ class Player {
         }
 
         this.velY = 10;
+        this.velX = velX;
 
         this.keys = keys;
 
@@ -53,6 +54,7 @@ class Player {
         }
 
         this.bullets.forEach(bullet => bullet.move()); //Movemos las balas
+
     }
 
     setListeners() {
@@ -67,9 +69,8 @@ class Player {
                     this.move();
                     break;
                 case this.keys.SHOT.code:
-                    this.direction.down = true;
+                    this.keys.SHOT.down = true;
                     this.shoot();
-                    console.log("dispara")
                     break;
             }
         })
@@ -82,8 +83,7 @@ class Player {
                     this.keys.DOWN.down = false;
                     break;
                 case this.keys.SHOT.code:
-                    this.direction.down = false;
-                    console.log("dispara2")
+                    this.keys.SHOT.down = false;
                     break;
             }
         })
@@ -91,7 +91,8 @@ class Player {
 
     shoot() {
         //Instanciamos nuevas balas
-        this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.posY0, this.height));
-        console.log(`Instancia las balas`)
+
+        this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.posY0, this.height, this.velX));
+        console.log(this.bullets)
     }
 }
