@@ -49,15 +49,17 @@ const Game = {
             this.drawAll();
             this.moveAll();
             if (this.isCollision()) {
-                console.log("Game Over Chaval");
+                // console.log("Game Over Chaval");
                 this.isCollisionPlayer1();
                 this.life1 = this.life1 - 1;
+                this.life1 === 0 ? alert("Game Over, 0 vidas") : null;
                 console.log(this.life1)
             }
             if (this.isCollision2()) {
-                console.log("Game Over Chavalote");
-                this.life2 = this.life2 + 1;
+                // console.log("Game Over Chavalote");
                 this.isCollisionPlayer2();
+                this.life2 = this.life2 - 1;
+                this.life2 === 0 ? console.log("Game Over, 0 vidas") : null;
                 console.log(this.life2)
             }
         }, 1000 / this.fps)
@@ -137,13 +139,19 @@ const Game = {
 
     // Eliminación del array de bullets del player 1 cuando choca con player 2
     isCollisionPlayer1() {
-        this.player2.bullets.forEach((obs, idx) => { this.player2.bullets.splice(idx, 1) })
+        this.player2.bullets.forEach((obs, idx) => {
+            console.log(idx)
+            this.player2.bullets.splice(idx, 1)
+        })
     },
 
 
     // Eliminación del array de bullets del player 2 cuando choca con player 1
     isCollisionPlayer2() {
-        this.player1.bullets.forEach((obs, idx) => { this.player1.bullets.splice(idx, 1) })
+        this.player1.bullets.forEach((obs, idx) => {
+            console.log("la id", idx)
+            this.player1.bullets.splice(idx, 1)
+        })
     },
 
 
