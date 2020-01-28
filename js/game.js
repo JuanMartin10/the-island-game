@@ -99,9 +99,17 @@ const Game = {
     isCollision() {
         return this.player2.bullets.some(
             bull =>
-                this.player1.posX + this.player1.width - 15 >= bull.posX &&
-                this.player1.posY + this.player1.height >= bull.posY &&
-                this.player1.posX <= bull.posX + 0
+                // this.player1.posY + this.player1.height >= bull.posY &&
+                // // this.player1.posX + this.player1.width - 15 >= bull.posX &&
+                // this.player1.posX <= bull.posX + 5 &&
+                // this.player1.posY <= bull.posY + 5
+
+                bull.posY + 5 >= this.player1.posY &&
+                bull.posX <= this.player1.posX + this.player1.width &&
+                bull.posY <= this.player1.posY + this.player1.height
+
+
+
         );
     },
 
@@ -109,9 +117,14 @@ const Game = {
     isCollision2() {
         return this.player1.bullets.some(
             bull =>
-                this.player2.posX + this.player2.width >= bull.posX &&
-                this.player2.posY + this.player2.height >= bull.posY &&
-                this.player2.posX <= bull.posX + 0
+                // this.player2.posX + this.player2.width >= bull.posX &&
+                // this.player2.posY + this.player2.height >= bull.posY &&
+                // this.player2.posX <= bull.posX + 0
+
+                bull.posY + 5 >= this.player2.posY &&
+                bull.posX + 5 >= this.player2.posX &&
+                // bull.posX >= this.player2.posX + this.player2.width &&
+                bull.posY <= this.player2.posY + this.player2.height
         );
     },
 

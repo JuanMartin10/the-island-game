@@ -9,7 +9,7 @@ class Bullet {
         this.velX = velX;
         this.velY = 1;
 
-        this.gravity = 0.25;
+        this.gravity = 0;
     }
 
     draw() {
@@ -21,11 +21,11 @@ class Bullet {
     }
     move() {
         this.posX += this.velX
-        this.posY += this.velY        //Añadimos velY linear para que caigan
+        // this.posY += this.velY        //Añadimos velY linear para que caigan
         this.velY += this.gravity     //Modificamos la velY para generar el efecto gravedad
 
-        if (this.posY >= this.playerHeight + this.posY0) {
-            this.velY *= -1   //Si llegan al suelo invertimos su velocidad para que "reboten"
-        }
+        // if (this.posY >= this.playerHeight + this.posY0) {
+        //     this.velY *= -1   //Si llegan al suelo invertimos su velocidad para que "reboten"
+        // }
     }
 }
