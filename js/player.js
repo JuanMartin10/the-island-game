@@ -30,6 +30,7 @@ class Player {
         this.keys = keys;
 
         this.bullets = [];
+        this.delay = true
 
         this.setListeners();
     }
@@ -72,10 +73,6 @@ class Player {
                     this.keys.DOWN.down = true;
                     this.move();
                     break;
-                case this.keys.SHOT.code:
-                    this.keys.SHOT.down = true;
-                    this.shoot();
-                    break;
             }
         })
         document.addEventListener("keyup", e => {
@@ -88,6 +85,7 @@ class Player {
                     break;
                 case this.keys.SHOT.code:
                     this.keys.SHOT.down = false;
+                    this.shoot();
                     break;
             }
         })
@@ -95,8 +93,12 @@ class Player {
 
     shoot() {
         //Instanciamos nuevas balas
-
-        this.bullets.push(new Bullet(this.ctx, this.shot, this.posY + 74, this.posY0, this.height, this.velX));
-        console.log(this.bullets)
+        if (this.delay) {
+            this.bullets.push(new Bullet(this.ctx, this.shot, this.posY + 74, this.posY0, this.height, this.velX))
+            this.delay = false
+            setTimeout(() => {
+                this.delay = true
+            }, 10);
+        }
     }
 }

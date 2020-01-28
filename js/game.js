@@ -50,7 +50,7 @@ const Game = {
                 // console.log("Game Over Chavalote");
                 this.isCollisionPlayer2();
                 this.life2 = this.life2 - 1;
-                this.life2 === 0 ? console.log("Game Over, 0 vidas") : null;
+                this.life2 === 0 ? alert("Game Over, 0 vidas") : null;
                 console.log(this.life2)
             }
         }, 1000 / this.fps)
@@ -100,37 +100,39 @@ const Game = {
         return this.player2.bullets.some(
             bull =>
                 bull.posY + 5 >= this.player1.posY &&
-                bull.posX <= this.player1.posX + this.player1.width &&
-                bull.posY <= this.player1.posY + this.player1.height
+                bull.posX - 5 <= this.player1.posX + this.player1.width &&
+                bull.posY - 5 <= this.player1.posY + this.player1.height
         );
     },
 
     // Comprobación de si las bullets del player1 colisionan con el player2
     isCollision2() {
         return this.player1.bullets.some(
-            bull =>
-                bull.posY + 5 >= this.player2.posY &&
+            bull => bull.posY + 5 >= this.player2.posY &&
                 bull.posX + 5 >= this.player2.posX &&
-                // bull.posX >= this.player2.posX + this.player2.width &&
-                bull.posY <= this.player2.posY + this.player2.height
+                bull.posY - 5 <= this.player2.posY + this.player2.height
         );
     },
 
     // Eliminación del array de bullets del player 1 cuando choca con player 2
     isCollisionPlayer1() {
-        this.player2.bullets.forEach((obs, idx) => {
-            console.log(idx)
-            this.player2.bullets.splice(idx, 1)
-        })
+        this.player2.bullets.some((bull, idx) => {
+            if (this.isCollision()) {
+                this.player2.bullets.splice(idx, 1)
+            }
+        }
+        )
     },
 
 
     // Eliminación del array de bullets del player 2 cuando choca con player 1
     isCollisionPlayer2() {
-        this.player1.bullets.forEach((obs, idx) => {
-            console.log("la id", idx)
-            this.player1.bullets.splice(idx, 1)
-        })
+        this.player1.bullets.some((bull, idx) => {
+            if (this.isCollision2()) {
+                this.player1.bullets.splice(idx, 1)
+            }
+        }
+        )
     },
 
 
