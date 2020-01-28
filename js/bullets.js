@@ -14,18 +14,13 @@ class Bullet {
 
     draw() {
         this.ctx.beginPath()
-        this.ctx.fillStyle = "red";
+        this.ctx.fillStyle = "black";
         this.ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
         this.ctx.fill();
         this.ctx.closePath();
     }
     move() {
-        this.posX += this.velX
-        // this.posY += this.velY        //Añadimos velY linear para que caigan
+        this.posX += this.velX * 4
         this.velY += this.gravity     //Modificamos la velY para generar el efecto gravedad
-
-        // if (this.posY >= this.playerHeight + this.posY0) {
-        //     this.velY *= -1   //Si llegan al suelo invertimos su velocidad para que "reboten"
-        // }
     }
 }

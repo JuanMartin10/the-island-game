@@ -67,6 +67,7 @@ const Game = {
         this.background.draw();
         this.player1.draw(this.framesCounter);
         this.player2.draw(this.framesCounter);
+
     },
 
     moveAll() {
@@ -77,6 +78,7 @@ const Game = {
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
+
 
     // LIMPIEZA DE BULLETS
     clearBullets() {

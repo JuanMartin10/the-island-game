@@ -100,5 +100,6 @@ class Player {
                 this.delay = true
             }, 10);
         }
+
     }
 }
