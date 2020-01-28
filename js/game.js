@@ -13,19 +13,10 @@ const Game = {
     player2: undefined,
     life1: 5,
     life2: 5,
+    shotX1: 140,
+    shotX2: 1140,
     fps: 24,
-    // keys1: {
-    //     // W: 87; S: 83; D: 68
-    //     UP: 87,
-    //     DOWN: 83,
-    //     SHOT: 68
-    // },
-    // keys2: {
-    //     // UP: 38; S: 40; D: 37
-    //     UP: 38,
-    //     DOWN: 40,
-    //     SHOT: 37
-    // },
+
 
 
 
@@ -67,8 +58,8 @@ const Game = {
 
     reset() {
         this.background = new Background(this.ctx, this.width, this.height);
-        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10, this.life1);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2);
+        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10, this.life1, this.shotX1);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2, this.shotX2);
 
     },
 
@@ -108,17 +99,9 @@ const Game = {
     isCollision() {
         return this.player2.bullets.some(
             bull =>
-                // this.player1.posY + this.player1.height >= bull.posY &&
-                // // this.player1.posX + this.player1.width - 15 >= bull.posX &&
-                // this.player1.posX <= bull.posX + 5 &&
-                // this.player1.posY <= bull.posY + 5
-
                 bull.posY + 5 >= this.player1.posY &&
                 bull.posX <= this.player1.posX + this.player1.width &&
                 bull.posY <= this.player1.posY + this.player1.height
-
-
-
         );
     },
 
@@ -126,10 +109,6 @@ const Game = {
     isCollision2() {
         return this.player1.bullets.some(
             bull =>
-                // this.player2.posX + this.player2.width >= bull.posX &&
-                // this.player2.posY + this.player2.height >= bull.posY &&
-                // this.player2.posX <= bull.posX + 0
-
                 bull.posY + 5 >= this.player2.posY &&
                 bull.posX + 5 >= this.player2.posX &&
                 // bull.posX >= this.player2.posX + this.player2.width &&

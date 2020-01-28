@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, w, h, keys, img, posX, posY, velX, life) {
+    constructor(ctx, w, h, keys, img, posX, posY, velX, life, shotPos) {
         this.ctx = ctx
         this.gameWidth = w
         this.gameHeight = h
@@ -22,6 +22,8 @@ class Player {
 
         this.velY = 10;
         this.velX = velX;
+
+        this.shot = shotPos;
 
         this.life = life;
 
@@ -94,7 +96,7 @@ class Player {
     shoot() {
         //Instanciamos nuevas balas
 
-        this.bullets.push(new Bullet(this.ctx, this.posX + 45, this.posY + 70, this.posY0, this.height, this.velX));
+        this.bullets.push(new Bullet(this.ctx, this.shot, this.posY + 74, this.posY0, this.height, this.velX));
         console.log(this.bullets)
     }
 }
