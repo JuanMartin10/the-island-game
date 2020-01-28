@@ -64,7 +64,6 @@ const Game = {
         this.player1.draw(this.framesCounter);
         this.player2.draw(this.framesCounter);
         this.obstacles.forEach(obs => obs.draw());
-
     },
 
     moveAll() {
@@ -81,7 +80,7 @@ const Game = {
         if (this.framesCounter % 70 == 0) {
             //Generamos obstaculos cada 70 frames.
             console.log(this.obstacles);
-            this.obstacles.push(new Obstacle(this.ctx)); //pusheamos nuevos obstaculos
+            this.obstacles.push(new Obstacle(this.ctx, this.canvas.width, this.canvas.height, this.shotX1, this.shotX2)); //pusheamos nuevos obstaculos
         }
     },
 
