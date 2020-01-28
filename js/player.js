@@ -1,5 +1,5 @@
 class Player {
-    constructor(ctx, w, h, keys, img, posX, posY, velX) {
+    constructor(ctx, w, h, keys, img, posX, posY, velX, life) {
         this.ctx = ctx
         this.gameWidth = w
         this.gameHeight = h
@@ -22,6 +22,8 @@ class Player {
 
         this.velY = 10;
         this.velX = velX;
+
+        this.life = life;
 
         this.keys = keys;
 

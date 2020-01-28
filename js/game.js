@@ -11,6 +11,8 @@ const Game = {
     framesCounter: 0,
     player1: undefined,
     player2: undefined,
+    life1: 5,
+    life2: 5,
     fps: 24,
     // keys1: {
     //     // W: 87; S: 83; D: 68
@@ -40,6 +42,7 @@ const Game = {
     start() {
         this.reset();
         this.interval = setInterval(() => {
+            // console.log(this.life1)
             this.framesCounter++;
             this.clearBullets();
             this.clear();
@@ -48,18 +51,22 @@ const Game = {
             if (this.isCollision()) {
                 console.log("Game Over Chaval");
                 this.isCollisionPlayer1();
+                this.life1 = this.life1 - 1;
+                console.log(this.life1)
             }
             if (this.isCollision2()) {
                 console.log("Game Over Chavalote");
+                this.life2 = this.life2 + 1;
                 this.isCollisionPlayer2();
+                console.log(this.life2)
             }
         }, 1000 / this.fps)
     },
 
     reset() {
         this.background = new Background(this.ctx, this.width, this.height);
-        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10);
+        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10, this.life1);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2);
 
     },
 
