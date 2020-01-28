@@ -45,8 +45,16 @@ const Game = {
             this.clear();
             this.drawAll();
             this.moveAll();
-            this.isCollision();
-            console.log(this.isCollision())
+            if (this.isCollision()) {
+                alert("Game Over Chaval");
+            }
+            if (this.isCollision2()) {
+                console.log("Game Over Chavalote");
+            }
+
+
+            // console.log(this.isCollision())
+            // console.log(this.isCollision2())
 
         }, 1000 / this.fps)
     },
@@ -95,25 +103,26 @@ const Game = {
     },
 
     isCollision() {
-        // funcion para comprobar colisiones
         return this.player2.bullets.some(
             bull =>
-                this.player1.posX + this.player1.width >= bull.posX &&
+                this.player1.posX + this.player1.width - 15 >= bull.posX &&
                 this.player1.posY + this.player1.height >= bull.posY &&
-                this.player1.posX <= bull.posX + 6
+                this.player1.posX <= bull.posX + 0
         );
-
+    },
+    isCollision2() {
         return this.player1.bullets.some(
             bull =>
                 this.player2.posX + this.player2.width >= bull.posX &&
                 this.player2.posY + this.player2.height >= bull.posY &&
-                this.player2.posX <= bull.posX + 6
+                this.player2.posX <= bull.posX + 0
         );
-
-        //fin del juego, detenemos intervalo
     },
 
 
-
-
 }
+
+
+
+
+

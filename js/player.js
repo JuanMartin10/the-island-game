@@ -92,7 +92,7 @@ class Player {
     shoot() {
         //Instanciamos nuevas balas
 
-        this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.posY0, this.height, this.velX));
+        this.bullets.push(new Bullet(this.ctx, this.posX + 45, this.posY + 70, this.posY0, this.height, this.velX));
         console.log(this.bullets)
     }
 }
