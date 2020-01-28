@@ -46,16 +46,13 @@ const Game = {
             this.drawAll();
             this.moveAll();
             if (this.isCollision()) {
-                alert("Game Over Chaval");
+                console.log("Game Over Chaval");
+                this.isCollisionPlayer1();
             }
             if (this.isCollision2()) {
                 console.log("Game Over Chavalote");
+                this.isCollisionPlayer2();
             }
-
-
-            // console.log(this.isCollision())
-            // console.log(this.isCollision2())
-
         }, 1000 / this.fps)
     },
 
@@ -75,21 +72,17 @@ const Game = {
     moveAll() {
         this.player1.move()
         this.player2.move()
-        // this.player1.moveHeroDown()
-        // this.player2.moveHeroDown()
-
-
-
     },
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     },
+
+    // LIMPIEZA DE BULLETS
     clearBullets() {
         //funcion para limpiar bullets de player1
         this.player1.bullets.forEach((obs, idx) => {
-            if (obs.posX >= 1280) {
+            if (obs.posX >= (1280)) {
                 this.player1.bullets.splice(idx, 1);
             }
         })
@@ -102,6 +95,7 @@ const Game = {
         })
     },
 
+    // Comprobación de si las bullets del player 2 colisionan con el player1
     isCollision() {
         return this.player2.bullets.some(
             bull =>
@@ -110,6 +104,8 @@ const Game = {
                 this.player1.posX <= bull.posX + 0
         );
     },
+
+    // Comprobación de si las bullets del player1 colisionan con el player2
     isCollision2() {
         return this.player1.bullets.some(
             bull =>
@@ -117,6 +113,17 @@ const Game = {
                 this.player2.posY + this.player2.height >= bull.posY &&
                 this.player2.posX <= bull.posX + 0
         );
+    },
+
+    // Eliminación del array de bullets del player 1 cuando choca con player 2
+    isCollisionPlayer1() {
+        this.player2.bullets.forEach((obs, idx) => { this.player2.bullets.splice(idx, 1) })
+    },
+
+
+    // Eliminación del array de bullets del player 2 cuando choca con player 1
+    isCollisionPlayer2() {
+        this.player1.bullets.forEach((obs, idx) => { this.player1.bullets.splice(idx, 1) })
     },
 
 
