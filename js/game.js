@@ -17,6 +17,7 @@ const Game = {
     shotX2: 1140,
     fps: 24,
     obstacles: [],
+    contObstacles: 0,
 
     init() {
         this.canvas = document.getElementById("canvas");
@@ -47,7 +48,7 @@ const Game = {
                 this.life2 = this.life2 - 1;
                 this.life2 === 0 ? alert("Game Over, Ha ganado player 1") : null;
             }
-            this.generateObstacles();
+            if (this.contObstacles <= 6) this.generateObstacles();
 
         }, 1000 / this.fps)
     },
@@ -77,9 +78,10 @@ const Game = {
     },
 
     generateObstacles() {
-        if (this.framesCounter % 70 == 0) {
+        if (this.framesCounter % 5 == 0) {
             //Generamos obstaculos cada 70 frames.
             console.log(this.obstacles);
+            this.contObstacles++
             this.obstacles.push(new Obstacle(this.ctx, this.canvas.width, this.canvas.height, this.shotX1, this.shotX2)); //pusheamos nuevos obstaculos
         }
     },
