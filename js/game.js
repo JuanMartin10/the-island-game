@@ -15,7 +15,7 @@ const Game = {
     life2: 5,
     shotX1: 140,
     shotX2: 1140,
-    fps: 24,
+    fps: 60,
     obstacles: [],
     contObstacles: 0,
     score1: undefined,
@@ -43,7 +43,6 @@ const Game = {
             this.drawAll();
             this.moveAll();
             this.drawScore();
-            this.gameover();
             if (this.isCollision()) {
                 this.isCollisionPlayer1();
                 this.life1 = this.life1 - 1;
@@ -54,13 +53,15 @@ const Game = {
                 this.life2 = this.life2 - 1;
                 this.life2 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
             }
+            this.gameover();
+
             if (this.contObstacles < 6) this.generateObstacles();
-            if (this.isCollisionObjectBullets2()) {
-                this.isCollisionPlayer1();
-            }
-            if (this.isCollisionObjectBullets1()) {
-                this.isCollisionPlayer2();
-            }
+
+            this.isCollisionObjectBullets2()
+            this.isCollisionObjectBullets1()
+
+
+
 
         }, 1000 / this.fps)
     },
@@ -94,7 +95,7 @@ const Game = {
     moveAll() {
         this.player1.move()
         this.player2.move()
-        this.obstacles.forEach(obs => obs.move());
+        // this.obstacles.forEach(obs => obs.move());
     },
 
     clear() {
@@ -139,9 +140,11 @@ const Game = {
     // Comprobación de si las bullets del player1 colisionan con el player2
     isCollision2() {
         return this.player1.bullets.some(
-            bull => bull.posY + 5 >= this.player2.posY &&
+            bull =>
+                bull.posY + 5 >= this.player2.posY &&
                 bull.posX + 5 >= this.player2.posX &&
                 bull.posY - 5 <= this.player2.posY + this.player2.height
+
         );
     },
 
@@ -169,23 +172,36 @@ const Game = {
     // Comprobación de si las bullets del player1 colisionan con algun objeto
     isCollisionObjectBullets1() {
         return this.player1.bullets.some(
-            bull => this.obstacles.some(
-                obst =>
-                    bull.posY + 5 >= obst.posY &&
-                    bull.posX + 5 >= obst.posX &&
-                    bull.posY <= obst.posY + obst.height &&
-                    bull.posX <= obst.posX + obst.width
+            (bull, idx) => this.obstacles.some(
+                obst => {
+
+                    if (bull.posY + 5 >= obst.posY &&
+                        bull.posX + 5 >= obst.posX - 10 &&
+                        bull.posY + 5 <= obst.posY + obst.height &&
+                        bull.posX + 5 <= obst.posX + 10 + obst.width) {
+
+                        this.player1.bullets.splice(idx, 1)
+                        return true
+                    }
+                }
             ));
     },
     // Comprobación de si las bullets del player 2 colisionan con algun objeto
     isCollisionObjectBullets2() {
+        console.log("piun piun")
         return this.player2.bullets.some(
-            bull => this.obstacles.some(
-                obst =>
-                    bull.posY + 5 >= obst.posY &&
-                    bull.posX <= obst.posX + obst.width &&
-                    bull.posY <= obst.posY + obst.height &&
-                    bull.posX + 5 >= obst.posX
+            (bull, idx) => this.obstacles.some(
+                (obst, obsIdx) => {
+                    console.log("lado arriba\n", bull.posY + 5 >= obst.posY, "lado abajo\n", bull.posY + 5 <= obst.posY + obst.height, "lado dcho\n", bull.posX + 5 <= obst.posX + obst.width, "lado izq\n ", bull.posX + 5 > obst.posX)
+                    if (bull.posY + 5 >= obst.posY &&
+                        bull.posX + 5 >= obst.posX - 10 &&
+                        bull.posY + 5 <= obst.posY + obst.height &&
+                        bull.posX + 5 <= obst.posX + 10 + obst.width) {
+                        console.log(idx, obsIdx)
+                        this.player2.bullets.splice(idx, 1)
+                        return true
+                    }
+                }
 
             ));
     },
@@ -195,9 +211,7 @@ const Game = {
     },
 
     clearInterval() {
-        console.log(`clear interval`)
         clearInterval(this.interval);
-
     }
 
 

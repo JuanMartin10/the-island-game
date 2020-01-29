@@ -3,7 +3,7 @@ class Obstacle {
         this.ctx = ctx;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-        this.width = 15;
+        this.width = 20;
         this.height = this.width * 5;
         this.velY = Math.random() * ((1) - (-1)) + (-1)
         this.shotX1 = shotX1;
