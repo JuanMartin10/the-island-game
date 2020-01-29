@@ -15,12 +15,10 @@ class ScoreBoard {
     update1(score) {
         this.ctx.fillStyle = "red";
         this.ctx.fillText(`PLAYER 1: ` + score + ` vidas`, 200, 50);
-        console.log("la vida", score)
     }
     update2(score) {
         this.ctx.fillStyle = "red";
         this.ctx.fillText(`PLAYER 2: ` + score + ` vidas`, 800, 50);
-        console.log("pinta el score")
     }
 
 }

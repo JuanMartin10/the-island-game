@@ -12,13 +12,14 @@ class Obstacle {
         this.posX = Math.random() * ((this.shotX2 - 100) - (this.shotX1 + 100)) + (this.shotX1 + 100)
         // this.posX = 430
         // La posicion en Y queda delimitada al alto del canvas menos el tamaño del objeto y por arriba el 0
-        // this.posY = Math.random() * ((this.canvasHeight - this.height) - 0) + 0;
-        this.posY = 100
+        this.posY = Math.random() * ((this.canvasHeight - this.height) - 0) + 0;
+        // this.posY = 100
 
     }
 
     draw() {
         this.ctx.fillStyle = "black";
+
         this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
     }
 

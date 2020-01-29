@@ -22,6 +22,7 @@ const Game = {
     score2: undefined,
 
 
+
     init() {
         this.canvas = document.getElementById("canvas");
         this.ctx = this.canvas.getContext("2d");
@@ -42,28 +43,23 @@ const Game = {
             this.drawAll();
             this.moveAll();
             this.drawScore();
-
+            this.gameover();
             if (this.isCollision()) {
                 this.isCollisionPlayer1();
                 this.life1 = this.life1 - 1;
-                console.log("vida fuera", this.life1)
-                //this.score1.life1 = this.score1.life - 1;
-                this.life1 === 0 ? alert("Game Over, Ha ganado player 2") : null;
+                this.life1 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
             }
             if (this.isCollision2()) {
                 this.isCollisionPlayer2();
                 this.life2 = this.life2 - 1;
-                //this.score2.life2 = this.score2.life - 1;
-                this.life2 === 0 ? alert("Game Over, Ha ganado player 1") : null;
+                this.life2 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
             }
             if (this.contObstacles < 6) this.generateObstacles();
             if (this.isCollisionObjectBullets2()) {
                 this.isCollisionPlayer1();
-
             }
             if (this.isCollisionObjectBullets1()) {
                 this.isCollisionPlayer2();
-                console.log("le has dado")
             }
 
         }, 1000 / this.fps)
@@ -86,7 +82,6 @@ const Game = {
         //con esta funcion pintamos el marcador
         this.score1.update1(this.life1);
         this.score2.update2(this.life2);
-        console.log(this.score1.life)
 
     },
     drawAll() {
@@ -178,7 +173,8 @@ const Game = {
                 obst =>
                     bull.posY + 5 >= obst.posY &&
                     bull.posX + 5 >= obst.posX &&
-                    bull.posY - 5 <= obst.posY + obst.height
+                    bull.posY <= obst.posY + obst.height &&
+                    bull.posX <= obst.posX + obst.width
             ));
     },
     // Comprobación de si las bullets del player 2 colisionan con algun objeto
@@ -187,12 +183,22 @@ const Game = {
             bull => this.obstacles.some(
                 obst =>
                     bull.posY + 5 >= obst.posY &&
-                    bull.posX - 5 <= obst.posX + obst.width &&
-                    bull.posY - 5 <= obst.posY + obst.height
+                    bull.posX <= obst.posX + obst.width &&
+                    bull.posY <= obst.posY + obst.height &&
+                    bull.posX + 5 >= obst.posX
+
             ));
     },
+    gameover() {
+        this.gameover1 = new GameOver(this.ctx, "./img/GameOver.png")
+        this.gameover2 = new GameOver(this.ctx, "./img/GameOver.png")
+    },
 
+    clearInterval() {
+        console.log(`clear interval`)
+        clearInterval(this.interval);
 
+    }
 
 
 }
