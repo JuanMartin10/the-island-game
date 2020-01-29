@@ -4,8 +4,8 @@ class GameOver {
         this.image = new Image()
         this.image.src = img;
         this.gravity = 0;
-        this.posX = 500;
-        this.posY = 203;
+        this.posX = 180;
+        this.posY = 150;
     }
 
 

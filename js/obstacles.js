@@ -24,7 +24,7 @@ class Obstacle {
     }
 
     move() {
-        this.posY = this.posY - (this.velY * 20)
+        this.posY = this.posY - (this.velY * 2)
         if (this.posY <= 0) {
             this.velY *= -1
         } else if (this.posY >= (this.canvasHeight - this.height)) {

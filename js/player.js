@@ -50,7 +50,7 @@ class Player {
     move() {
         if (this.posY >= this.posY0 && this.keys.UP.down) {
             this.posY -= 30;
-            this.velY = 100;
+            this.velY = 1;
         }
 
         if (this.posY <= this.posY1 && this.keys.DOWN.down) {

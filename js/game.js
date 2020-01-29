@@ -51,7 +51,7 @@ const Game = {
             if (this.isCollision2()) {
                 this.isCollisionPlayer2();
                 this.life2 = this.life2 - 1;
-                this.life2 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
+                this.life2 === 0 ? (this.gameover2.draw(), this.clearInterval()) : null;
             }
             this.gameover();
 
@@ -95,7 +95,7 @@ const Game = {
     moveAll() {
         this.player1.move()
         this.player2.move()
-        // this.obstacles.forEach(obs => obs.move());
+        this.obstacles.forEach(obs => obs.move());
     },
 
     clear() {
@@ -206,8 +206,8 @@ const Game = {
             ));
     },
     gameover() {
-        this.gameover1 = new GameOver(this.ctx, "./img/GameOver.png")
-        this.gameover2 = new GameOver(this.ctx, "./img/GameOver.png")
+        this.gameover1 = new GameOver(this.ctx, "./img/gameOver1.png")
+        this.gameover2 = new GameOver(this.ctx, "./img/gameOver2.png")
     },
 
     clearInterval() {
