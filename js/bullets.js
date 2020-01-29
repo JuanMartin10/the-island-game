@@ -21,7 +21,6 @@ class Bullet {
     }
     move() {
         this.posX += this.velX * 4
-
         this.velY += this.gravity     //Modificamos la velY para generar el efecto gravedad
     }
 }
