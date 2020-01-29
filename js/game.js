@@ -18,6 +18,9 @@ const Game = {
     fps: 24,
     obstacles: [],
     contObstacles: 0,
+    score1: undefined,
+    score2: undefined,
+
 
     init() {
         this.canvas = document.getElementById("canvas");
@@ -38,21 +41,28 @@ const Game = {
             this.clear();
             this.drawAll();
             this.moveAll();
+            this.drawScore();
+
             if (this.isCollision()) {
                 this.isCollisionPlayer1();
                 this.life1 = this.life1 - 1;
+                console.log("vida fuera", this.life1)
+                //this.score1.life1 = this.score1.life - 1;
                 this.life1 === 0 ? alert("Game Over, Ha ganado player 2") : null;
             }
             if (this.isCollision2()) {
                 this.isCollisionPlayer2();
                 this.life2 = this.life2 - 1;
+                //this.score2.life2 = this.score2.life - 1;
                 this.life2 === 0 ? alert("Game Over, Ha ganado player 1") : null;
             }
             if (this.contObstacles < 6) this.generateObstacles();
-            if (this.isCollisionObject1()) {
-                console.log("le has dado")
+            if (this.isCollisionObjectBullets2()) {
+                this.isCollisionPlayer1();
+
             }
-            if (this.isCollisionObject2()) {
+            if (this.isCollisionObjectBullets1()) {
+                this.isCollisionPlayer2();
                 console.log("le has dado")
             }
 
@@ -64,8 +74,21 @@ const Game = {
         this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10, this.life1, this.shotX1);
         this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2, this.shotX2);
         this.obstacles = [];
-    },
+        this.score1 = new ScoreBoard(this.ctx, 40, 120);
+        this.score2 = new ScoreBoard(this.ctx, 1140, 120);
+        this.score1.init(this.ctx);
+        this.score2.init(this.ctx);
 
+
+
+    },
+    drawScore() {
+        //con esta funcion pintamos el marcador
+        this.score1.update1(this.life1);
+        this.score2.update2(this.life2);
+        console.log(this.score1.life)
+
+    },
     drawAll() {
         this.background.draw();
         this.player1.draw(this.framesCounter);
@@ -84,13 +107,9 @@ const Game = {
     },
 
     generateObstacles() {
-        if (this.framesCounter % 5 == 0) {
-            //Generamos obstaculos cada 70 frames.
-            console.log(this.obstacles);
+        if (this.framesCounter % 10 == 0) {
             this.contObstacles++
             this.obstacles.push(new Obstacle(this.ctx, this.canvas.width, this.canvas.height, this.shotX1, this.shotX2)); //pusheamos nuevos obstaculos
-            console.log(this.obstacles[0].posX)
-
         }
     },
 
@@ -131,10 +150,10 @@ const Game = {
         );
     },
 
-    // Eliminación del array de bullets del player 1 cuando choca con player 2
+    // Eliminación del array de bullets del player 1 cuando choca con player 2 o choca con objetos
     isCollisionPlayer1() {
         this.player2.bullets.some((bull, idx) => {
-            if (this.isCollision()) {
+            if (this.isCollision() || this.isCollisionObjectBullets2()) {
                 this.player2.bullets.splice(idx, 1)
             }
         }
@@ -142,33 +161,33 @@ const Game = {
     },
 
 
-    // Eliminación del array de bullets del player 2 cuando choca con player 1
+    // Eliminación del array de bullets del player 2, cuando choca con player 1 o choca con objetos
     isCollisionPlayer2() {
         this.player1.bullets.some((bull, idx) => {
-            if (this.isCollision2()) {
+            if (this.isCollision2() || this.isCollisionObjectBullets1()) {
                 this.player1.bullets.splice(idx, 1)
             }
         }
         )
     },
 
-    // Comprobación de si las bullets del player 2 colisionan con algun objeto
-    isCollisionObject2() {
-        return this.player2.bullets.some(
-            bull => this.obstacles.some(
-                obst =>
-                    bull.posY + 5 >= obst.posY &&
-                    bull.posX - 5 <= obst.posX + obst.width &&
-                    bull.posY - 5 <= obst.posY + obst.height
-            ));
-    },
     // Comprobación de si las bullets del player1 colisionan con algun objeto
-    isCollisionObject1() {
+    isCollisionObjectBullets1() {
         return this.player1.bullets.some(
             bull => this.obstacles.some(
                 obst =>
                     bull.posY + 5 >= obst.posY &&
                     bull.posX + 5 >= obst.posX &&
+                    bull.posY - 5 <= obst.posY + obst.height
+            ));
+    },
+    // Comprobación de si las bullets del player 2 colisionan con algun objeto
+    isCollisionObjectBullets2() {
+        return this.player2.bullets.some(
+            bull => this.obstacles.some(
+                obst =>
+                    bull.posY + 5 >= obst.posY &&
+                    bull.posX - 5 <= obst.posX + obst.width &&
                     bull.posY - 5 <= obst.posY + obst.height
             ));
     },
