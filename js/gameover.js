@@ -16,8 +16,5 @@ class GameOver {
             this.posX,
             this.posY,
         );
-        // Escritura de "player"
-        // this.ctx.fillStyle = "black";
-        // this.ctx.fillText(`player 1`, 500, 600);
     }
 }

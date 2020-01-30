@@ -9,16 +9,23 @@ class ScoreBoard {
 
     init(ctx) {
         this.ctx = ctx
-        this.ctx.font = "30px sans-serif"
+        // this.ctx.font = "30px sans-serif"
+        this.ctx.font = "40px vcr osd mono"
     }
 
     update1(score) {
         this.ctx.fillStyle = "red";
-        this.ctx.fillText(`PLAYER 1: ` + score + ` vidas`, 200, 50);
+        this.ctx.fillText(`SCORE: `, 220, 50);
+        this.ctx.fillText(+ score + ` LIFES`, 200, 90)
+
+
+
     }
     update2(score) {
         this.ctx.fillStyle = "red";
-        this.ctx.fillText(`PLAYER 2: ` + score + ` vidas`, 800, 50);
+        this.ctx.fillText(`SCORE: `, 870, 50);
+        this.ctx.fillText(+ score + ` LIFES`, 850, 90)
+
     }
 
 }

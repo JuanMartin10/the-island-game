@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0
+}
+
+body{
+    background-color: #ecb265
+}
+
+h1{
+font-family: vcr osd mono;
+position: absolute;
+z-index: -100;
+left: 226px;
+top: 150px;
+font-size: 6em;
+}
+
+#start-button{
+background: green;
+z-index: -100;
+margin: 20px;
+padding: 20px 40px;
+font-size: 1.5em;
+position: absolute;
+left: 500px;
+top: 319px;
+border-radius: 20px;
+color: white;
+}
+
+#teclas{
+    left: 339px;
+    top: 473px;
+    position: absolute;
+    width: 600px;
+    z-index: -100;
+}
+
+#canvas {
+    margin: 0;
+    padding: 0;
+}

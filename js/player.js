@@ -55,7 +55,7 @@ class Player {
 
         if (this.posY <= this.posY1 && this.keys.DOWN.down) {
             this.posY += 30;
-            this.velY += 10;
+            this.velY += 1;
         }
 
         this.bullets.forEach(bullet => bullet.move()); //Movemos las balas
