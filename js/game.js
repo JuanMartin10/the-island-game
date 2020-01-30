@@ -20,7 +20,9 @@ const Game = {
     contObstacles: 0,
     score1: undefined,
     score2: undefined,
-    obstacleImg: ["./obstacle/obstacle1.jpeg", "./obstacle/obstacle2.jpeg", "./obstacle/obstacle3.png", "./obstacle/obstacle4.png", "./obstacle/obstacle5.png", "./obstacle/obstacle6.jpeg"],
+    obstacleImg: ["./obstacle/pibito1.png", "./obstacle/pibita1.png", "./obstacle/pibito2.png", "./obstacle/pibita2.png", "./obstacle/pibito3.png", "./obstacle/pibita3.png"],
+
+    // obstacleImg: ["./obstacle/obstacle1.jpeg", "./obstacle/obstacle2.jpeg", "./obstacle/obstacle3.png", "./obstacle/obstacle4.png", "./obstacle/obstacle5.png", "./obstacle/obstacle6.jpeg"],
     countObsImg: 0,
     sound1: undefined,
     sound1Src: './sounds/fani.mp3',
@@ -47,21 +49,25 @@ const Game = {
             this.drawAll();
             this.moveAll();
             this.drawScore();
+            // this.isCollisionObjectBullets(this.player2, 0)
+            // this.isCollisionObjectBullets(this.player1, 1280)
+            this.isCollisionObjectBullets2();
+            this.isCollisionObjectBullets1();
+            this.contObstacles < 6 ? this.generateObstacles() : null;
             if (this.isCollisionPlayer1Bullets2()) {
                 this.life1 = this.life1 - 1;
+                console.log("has muerto")
                 this.life1 === 0 ? (this.sound1.play(), setTimeout(() => { this.gameover1.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             if (this.isCollisionPlayer2Bullets1()) {
                 this.life2 = this.life2 - 1;
+                console.log("has muerto2")
 
                 this.life2 === 0 ? (this.sound2.play(), setTimeout(() => { this.gameover2.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             this.gameover();
 
-            if (this.contObstacles < 6) this.generateObstacles();
 
-            this.isCollisionObjectBullets2()
-            this.isCollisionObjectBullets1()
         }, 1000 / this.fps)
     },
 
@@ -73,7 +79,7 @@ const Game = {
 
         this.background = new Background(this.ctx, this.width, this.height);
         this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1warfani.png", 40, 500, 10, this.life1, this.shotX1);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2, this.shotX2);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2warchris.png", 1140, 500, -10, this.life2, this.shotX2);
         this.obstacles = [];
         this.score1 = new ScoreBoard(this.ctx, 40, 120);
         this.score2 = new ScoreBoard(this.ctx, 1140, 120);
@@ -112,8 +118,6 @@ const Game = {
         }
     },
 
-
-
     // Comprobación de si las bullets del player1 colisionan con el player2
     isCollisionPlayer2Bullets1() {
         return this.player1.bullets.some(
@@ -141,6 +145,24 @@ const Game = {
             }
         );
     },
+
+
+
+    // isCollisionObjectBullets(player, width) {
+    //     return player.bullets.some(
+    //         (bull, idx) => this.obstacles.some(
+    //             obst => {
+
+    //                 if ((bull.posY + 5 >= obst.posY &&
+    //                     bull.posX + 5 >= obst.posX - 10 &&
+    //                     bull.posY + 5 <= obst.posY + obst.height &&
+    //                     bull.posX + 5 <= obst.posX + 10 + obst.width) || ((bull.posX <= (width)) || (bull.posX >= (width)))) {
+    //                     player.bullets.splice(idx, 1)
+    //                     return true
+    //                 }
+    //             }
+    //         ));
+    // },
 
     // Comprobación y eliminación de las bullets del player1 colisionan con algun objeto O salen de la pantalla
     isCollisionObjectBullets1() {

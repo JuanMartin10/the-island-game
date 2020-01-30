@@ -1,4 +1,3 @@
-//este literal mantiene el marcador del juego con su puntuación
 class ScoreBoard {
     constructor(ctx, x, y) {
         this.ctx = ctx
