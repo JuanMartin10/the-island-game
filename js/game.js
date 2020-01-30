@@ -20,8 +20,12 @@ const Game = {
     contObstacles: 0,
     score1: undefined,
     score2: undefined,
-    obstacleImg: ["./obstacle/obstacle1.jpeg", "./obstacle/obstacle2.jpeg", "./obstacle/obstacle3.png"],
+    obstacleImg: ["./obstacle/obstacle1.jpeg", "./obstacle/obstacle2.jpeg", "./obstacle/obstacle3.png", "./obstacle/obstacle4.png", "./obstacle/obstacle5.png", "./obstacle/obstacle6.jpeg"],
     countObsImg: 0,
+    sound1: undefined,
+    sound1Src: './sounds/fani.mp3',
+    sound2: undefined,
+    sound2Src: './sounds/christ.mp3',
 
 
     init() {
@@ -38,21 +42,23 @@ const Game = {
         this.reset();
         this.interval = setInterval(() => {
             this.framesCounter++;
+            this.sounds();
             this.clear();
             this.drawAll();
             this.moveAll();
             this.drawScore();
             if (this.isCollisionPlayer1Bullets2()) {
                 this.life1 = this.life1 - 1;
-                this.life1 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
+                this.life1 === 0 ? (this.sound1.play(), setTimeout(() => { this.gameover1.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             if (this.isCollisionPlayer2Bullets1()) {
                 this.life2 = this.life2 - 1;
-                this.life2 === 0 ? (this.gameover2.draw(), this.clearInterval()) : null;
+
+                this.life2 === 0 ? (this.sound2.play(), setTimeout(() => { this.gameover2.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             this.gameover();
 
-            if (this.contObstacles < 3) this.generateObstacles();
+            if (this.contObstacles < 6) this.generateObstacles();
 
             this.isCollisionObjectBullets2()
             this.isCollisionObjectBullets1()
@@ -60,8 +66,13 @@ const Game = {
     },
 
     reset() {
+        this.life1 = 5;
+        this.life2 = 5;
+        this.contObstacles = 0;
+        this.countObsImg = 0
+
         this.background = new Background(this.ctx, this.width, this.height);
-        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1war.png", 40, 500, 10, this.life1, this.shotX1);
+        this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1warfani.png", 40, 500, 10, this.life1, this.shotX1);
         this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2war.png", 1140, 500, -10, this.life2, this.shotX2);
         this.obstacles = [];
         this.score1 = new ScoreBoard(this.ctx, 40, 120);
@@ -170,9 +181,14 @@ const Game = {
         this.gameover2 = new GameOver(this.ctx, "./img/gameOver2.png")
     },
 
+    sounds() {
+        this.sound1 = new Sound(this.sound1Src)
+        this.sound2 = new Sound(this.sound2Src)
+    },
+
     clearInterval() {
         clearInterval(this.interval);
-    }
+    },
 
 
 }
