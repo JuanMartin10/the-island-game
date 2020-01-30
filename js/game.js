@@ -37,18 +37,16 @@ const Game = {
     start() {
         this.reset();
         this.interval = setInterval(() => {
-            // console.log(this.life1)
             this.framesCounter++;
-            this.clearBullets();
             this.clear();
             this.drawAll();
             this.moveAll();
             this.drawScore();
-            if (this.isCollision()) {
+            if (this.isCollisionPlayer1Bullets2()) {
                 this.life1 = this.life1 - 1;
                 this.life1 === 0 ? (this.gameover1.draw(), this.clearInterval()) : null;
             }
-            if (this.isCollision2()) {
+            if (this.isCollisionPlayer2Bullets1()) {
                 this.life2 = this.life2 - 1;
                 this.life2 === 0 ? (this.gameover2.draw(), this.clearInterval()) : null;
             }
@@ -104,39 +102,9 @@ const Game = {
     },
 
 
-    // LIMPIEZA DE BULLETS CUANDO SALEN DE LA PANTALLA
-    clearBullets() {
-        //funcion para limpiar bullets de player1
-        this.player1.bullets.forEach((obs, idx) => {
-            if (obs.posX >= (1280)) {
-                this.player1.bullets.splice(idx, 1);
-            }
-        })
-
-        //funcion para limpiar bullets de player2
-        this.player2.bullets.forEach((obs, idx) => {
-            if (obs.posX <= 0) {
-                this.player2.bullets.splice(idx, 1);
-            }
-        })
-    },
-
-    // Comprobación de si las bullets del player 2 colisionan con el player1
-    isCollision() {
-        return this.player2.bullets.some(
-            (bull, idx) => {
-                if (bull.posY + 5 >= this.player1.posY &&
-                    bull.posX - 5 <= this.player1.posX + this.player1.width &&
-                    bull.posY - 5 <= this.player1.posY + this.player1.height) {
-                    this.player2.bullets.splice(idx, 1)
-                    return true
-                }
-            }
-        );
-    },
 
     // Comprobación de si las bullets del player1 colisionan con el player2
-    isCollision2() {
+    isCollisionPlayer2Bullets1() {
         return this.player1.bullets.some(
             (bull, idx) => {
                 if (bull.posY + 5 >= this.player2.posY &&
@@ -149,33 +117,46 @@ const Game = {
         );
     },
 
-    // Comprobación y eliminación de si las bullets del player1 colisionan con algun objeto
+    // Comprobación de si las bullets del player 2 colisionan con el player1
+    isCollisionPlayer1Bullets2() {
+        return this.player2.bullets.some(
+            (bull, idx) => {
+                if (bull.posY + 5 >= this.player1.posY &&
+                    bull.posX - 5 <= this.player1.posX + this.player1.width &&
+                    bull.posY - 5 <= this.player1.posY + this.player1.height) {
+                    this.player2.bullets.splice(idx, 1)
+                    return true
+                }
+            }
+        );
+    },
+
+    // Comprobación y eliminación de las bullets del player1 colisionan con algun objeto O salen de la pantalla
     isCollisionObjectBullets1() {
         return this.player1.bullets.some(
             (bull, idx) => this.obstacles.some(
                 obst => {
 
-                    if (bull.posY + 5 >= obst.posY &&
+                    if ((bull.posY + 5 >= obst.posY &&
                         bull.posX + 5 >= obst.posX - 10 &&
                         bull.posY + 5 <= obst.posY + obst.height &&
-                        bull.posX + 5 <= obst.posX + 10 + obst.width) {
-
+                        bull.posX + 5 <= obst.posX + 10 + obst.width) || (bull.posX >= (1280))) {
                         this.player1.bullets.splice(idx, 1)
                         return true
                     }
                 }
             ));
     },
-    // Comprobación y eliminación de si las bullets del player 2 colisionan con algun objeto
+    // Comprobación y eliminación de las bullets del player 2 colisionan con algun objeto O salen de la pantalla
     isCollisionObjectBullets2() {
         return this.player2.bullets.some(
             (bull, idx) => this.obstacles.some(
                 (obst, obsIdx) => {
 
-                    if (bull.posY + 5 >= obst.posY &&
+                    if ((bull.posY + 5 >= obst.posY &&
                         bull.posX + 5 >= obst.posX - 10 &&
                         bull.posY + 5 <= obst.posY + obst.height &&
-                        bull.posX + 5 <= obst.posX + 10 + obst.width) {
+                        bull.posX + 5 <= obst.posX + 10 + obst.width) || (bull.posX <= (0))) {
                         this.player2.bullets.splice(idx, 1)
                         return true
                     }

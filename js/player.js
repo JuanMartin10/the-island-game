@@ -98,6 +98,7 @@ class Player {
             setTimeout(() => {
                 this.delay = true
             }, 10);
+            console.log(this.bullets)
         }
 
     }
