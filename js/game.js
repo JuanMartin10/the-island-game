@@ -79,7 +79,7 @@ const Game = {
 
         this.background = new Background(this.ctx, this.width, this.height);
         this.player1 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 87, down: false }, DOWN: { code: 83, down: false }, SHOT: { code: 68, down: false } }, "./img/player1warfani.png", 40, 500, 10, this.life1, this.shotX1);
-        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2warchris.png", 1140, 500, -10, this.life2, this.shotX2);
+        this.player2 = new Player(this.ctx, this.canvas.width, this.canvas.height, { UP: { code: 38, down: false }, DOWN: { code: 40, down: false }, SHOT: { code: 37, down: false } }, "./img/player2warchris.png", 1140, 40, -10, this.life2, this.shotX2);
         this.obstacles = [];
         this.score1 = new ScoreBoard(this.ctx, 40, 120);
         this.score2 = new ScoreBoard(this.ctx, 1140, 120);
