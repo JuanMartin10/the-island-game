@@ -20,7 +20,8 @@ const Game = {
     contObstacles: 0,
     score1: undefined,
     score2: undefined,
-
+    obstacleImg: ["./obstacle/obstacle1.jpeg", "./obstacle/obstacle2.jpeg", "./obstacle/obstacle3.png"],
+    countObsImg: 0,
 
 
     init() {
@@ -55,14 +56,10 @@ const Game = {
             }
             this.gameover();
 
-            if (this.contObstacles < 6) this.generateObstacles();
+            if (this.contObstacles < 3) this.generateObstacles();
 
             this.isCollisionObjectBullets2()
             this.isCollisionObjectBullets1()
-
-
-
-
         }, 1000 / this.fps)
     },
 
@@ -75,16 +72,14 @@ const Game = {
         this.score2 = new ScoreBoard(this.ctx, 1140, 120);
         this.score1.init(this.ctx);
         this.score2.init(this.ctx);
-
-
-
     },
+
     drawScore() {
         //con esta funcion pintamos el marcador
         this.score1.update1(this.life1);
         this.score2.update2(this.life2);
-
     },
+
     drawAll() {
         this.background.draw();
         this.player1.draw(this.framesCounter);
@@ -105,7 +100,8 @@ const Game = {
     generateObstacles() {
         if (this.framesCounter % 10 == 0) {
             this.contObstacles++
-            this.obstacles.push(new Obstacle(this.ctx, this.canvas.width, this.canvas.height, this.shotX1, this.shotX2)); //pusheamos nuevos obstaculos
+            this.obstacles.push(new Obstacle(this.ctx, this.canvas.width, this.canvas.height, this.shotX1, this.shotX2, this.obstacleImg[this.countObsImg])); //pusheamos nuevos obstaculos
+            this.countObsImg++
         }
     },
 
@@ -205,6 +201,7 @@ const Game = {
 
             ));
     },
+
     gameover() {
         this.gameover1 = new GameOver(this.ctx, "./img/gameOver1.png")
         this.gameover2 = new GameOver(this.ctx, "./img/gameOver2.png")

@@ -5,11 +5,8 @@ class Bullet {
         this.posY = y;
         this.posY0 = y0
         this.playerHeight = playerH
-        this.radius = 5;
         this.velX = velX + 1;
-        this.velY = 1;
-
-        this.gravity = 0;
+        this.radius = 5;
     }
 
     draw() {
@@ -19,8 +16,8 @@ class Bullet {
         this.ctx.fill();
         this.ctx.closePath();
     }
+
     move() {
         this.posX += this.velX * 4
-        this.velY += this.gravity     //Modificamos la velY para generar el efecto gravedad
     }
 }

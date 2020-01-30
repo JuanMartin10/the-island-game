@@ -46,7 +46,7 @@ class Player {
 
         this.bullets.forEach(bullet => bullet.draw());
     }
-    // Movimiento del muñeco hacia arriba
+    // Movimiento del player
     move() {
         if (this.posY >= this.posY0 && this.keys.UP.down) {
             this.posY -= 30;
@@ -59,7 +59,6 @@ class Player {
         }
 
         this.bullets.forEach(bullet => bullet.move()); //Movemos las balas
-
     }
 
     setListeners() {
