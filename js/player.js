@@ -30,7 +30,8 @@ class Player {
         this.keys = keys;
 
         this.bullets = [];
-        this.delay = true
+        this.delay = true;
+        this.sound3Src = './sounds/sound3.wav';
 
         this.setListeners();
     }
@@ -94,6 +95,8 @@ class Player {
         //Instanciamos nuevas balas
         if (this.delay) {
             this.bullets.push(new Bullet(this.ctx, this.shot, this.posY + 74, this.posY0, this.height, this.velX))
+            // this.sound3 = new Sound(this.sound3Src)
+            // this.sound3.play()
             this.delay = false
             setTimeout(() => {
                 this.delay = true

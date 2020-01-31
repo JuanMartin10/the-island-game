@@ -15,7 +15,7 @@ const Game = {
     life2: 5,
     shotX1: 140,
     shotX2: 1140,
-    fps: 60,
+    fps: 50,
     obstacles: [],
     contObstacles: 0,
     score1: undefined,
@@ -28,6 +28,7 @@ const Game = {
     sound1Src: './sounds/fani.mp3',
     sound2: undefined,
     sound2Src: './sounds/christ.mp3',
+    // sound3Src: './sounds/sound3.wav',
 
 
     init() {
@@ -42,9 +43,10 @@ const Game = {
 
     start() {
         this.reset();
+        this.sounds();
         this.interval = setInterval(() => {
+            this.framesCounter >= 2000 ? this.framesCounter = 0 : null;
             this.framesCounter++;
-            this.sounds();
             this.clear();
             this.drawAll();
             this.moveAll();
@@ -56,14 +58,14 @@ const Game = {
             this.contObstacles < 6 ? this.generateObstacles() : null;
             if (this.isCollisionPlayer1Bullets2()) {
                 this.life1 = this.life1 - 1;
-                console.log("has muerto")
-                this.life1 === 0 ? (this.sound1.play(), setTimeout(() => { this.gameover1.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
+
+                this.life1 === 0 ? (setTimeout(() => { this.gameover1.draw(), this.sound1.play(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             if (this.isCollisionPlayer2Bullets1()) {
                 this.life2 = this.life2 - 1;
-                console.log("has muerto2")
 
-                this.life2 === 0 ? (this.sound2.play(), setTimeout(() => { this.gameover2.draw(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
+
+                this.life2 === 0 ? (setTimeout(() => { this.gameover2.draw(), this.sound2.play(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             this.gameover();
 
@@ -206,6 +208,7 @@ const Game = {
     sounds() {
         this.sound1 = new Sound(this.sound1Src)
         this.sound2 = new Sound(this.sound2Src)
+        // this.sound3 = new Sound(this.sound3Src)
     },
 
     clearInterval() {

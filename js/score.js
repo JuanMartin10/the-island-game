@@ -16,10 +16,8 @@ class ScoreBoard {
         this.ctx.fillStyle = "red";
         this.ctx.fillText(`SCORE: `, 220, 50);
         this.ctx.fillText(+ score + ` LIFES`, 200, 90)
-
-
-
     }
+
     update2(score) {
         this.ctx.fillStyle = "red";
         this.ctx.fillText(`SCORE: `, 870, 50);
