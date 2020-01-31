@@ -3,7 +3,6 @@ class ScoreBoard {
         this.ctx = ctx
         this.posX = x;
         this.posY = y;
-
     }
 
     init(ctx) {

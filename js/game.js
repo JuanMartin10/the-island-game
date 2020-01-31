@@ -47,25 +47,24 @@ const Game = {
         this.interval = setInterval(() => {
             this.framesCounter >= 2000 ? this.framesCounter = 0 : null;
             this.framesCounter++;
+
             this.clear();
             this.drawAll();
             this.moveAll();
             this.drawScore();
-            // this.isCollisionObjectBullets(this.player2, 0)
-            // this.isCollisionObjectBullets(this.player1, 1280)
-            this.isCollisionObjectBullets2();
-            this.isCollisionObjectBullets1();
+            this.isCollisionObjectBullets(this.player2, 0, 1280)
+            this.isCollisionObjectBullets(this.player1, 0, 1280)
             this.contObstacles < 6 ? this.generateObstacles() : null;
             if (this.isCollisionPlayer1Bullets2()) {
                 this.life1 = this.life1 - 1;
 
-                this.life1 === 0 ? (setTimeout(() => { this.gameover1.draw(), this.sound1.play(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
+                this.life1 === 0 ? (this.sound1.play(), setTimeout(() => { this.gameover1.draw(), this.intervalClean() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             if (this.isCollisionPlayer2Bullets1()) {
                 this.life2 = this.life2 - 1;
 
 
-                this.life2 === 0 ? (setTimeout(() => { this.gameover2.draw(), this.sound2.play(), this.clearInterval() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
+                this.life2 === 0 ? (this.sound2.play(), setTimeout(() => { this.gameover2.draw(), this.intervalClean() }, 50), setTimeout(() => { this.start() }, 5000)) : null;
             }
             this.gameover();
 
@@ -149,56 +148,24 @@ const Game = {
     },
 
 
-
-    // isCollisionObjectBullets(player, width) {
-    //     return player.bullets.some(
-    //         (bull, idx) => this.obstacles.some(
-    //             obst => {
-
-    //                 if ((bull.posY + 5 >= obst.posY &&
-    //                     bull.posX + 5 >= obst.posX - 10 &&
-    //                     bull.posY + 5 <= obst.posY + obst.height &&
-    //                     bull.posX + 5 <= obst.posX + 10 + obst.width) || ((bull.posX <= (width)) || (bull.posX >= (width)))) {
-    //                     player.bullets.splice(idx, 1)
-    //                     return true
-    //                 }
-    //             }
-    //         ));
-    // },
-
-    // Comprobación y eliminación de las bullets del player1 colisionan con algun objeto O salen de la pantalla
-    isCollisionObjectBullets1() {
-        return this.player1.bullets.some(
+    // Comprobacion de las balas del player cuando salen de la pantalla o cuando chocan con obstaculo
+    isCollisionObjectBullets(player, width, width2) {
+        return player.bullets.some(
             (bull, idx) => this.obstacles.some(
                 obst => {
 
                     if ((bull.posY + 5 >= obst.posY &&
                         bull.posX + 5 >= obst.posX - 10 &&
                         bull.posY + 5 <= obst.posY + obst.height &&
-                        bull.posX + 5 <= obst.posX + 10 + obst.width) || (bull.posX >= (1280))) {
-                        this.player1.bullets.splice(idx, 1)
+                        bull.posX + 5 <= obst.posX + 10 + obst.width) || ((bull.posX <= (width)) || (bull.posX >= (width2)))) {
+                        player.bullets.splice(idx, 1)
                         return true
                     }
                 }
             ));
     },
-    // Comprobación y eliminación de las bullets del player 2 colisionan con algun objeto O salen de la pantalla
-    isCollisionObjectBullets2() {
-        return this.player2.bullets.some(
-            (bull, idx) => this.obstacles.some(
-                (obst, obsIdx) => {
 
-                    if ((bull.posY + 5 >= obst.posY &&
-                        bull.posX + 5 >= obst.posX - 10 &&
-                        bull.posY + 5 <= obst.posY + obst.height &&
-                        bull.posX + 5 <= obst.posX + 10 + obst.width) || (bull.posX <= (0))) {
-                        this.player2.bullets.splice(idx, 1)
-                        return true
-                    }
-                }
 
-            ));
-    },
 
     gameover() {
         this.gameover1 = new GameOver(this.ctx, "./img/gameOver1.png")
@@ -211,7 +178,8 @@ const Game = {
         // this.sound3 = new Sound(this.sound3Src)
     },
 
-    clearInterval() {
+
+    intervalClean: function () {
         clearInterval(this.interval);
     },
 

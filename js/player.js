@@ -97,6 +97,7 @@ class Player {
             this.bullets.push(new Bullet(this.ctx, this.shot, this.posY + 74, this.posY0, this.height, this.velX))
             // this.sound3 = new Sound(this.sound3Src)
             // this.sound3.play()
+            console.log(this.bullets)
             this.delay = false
             setTimeout(() => {
                 this.delay = true
